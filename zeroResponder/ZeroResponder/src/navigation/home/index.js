@@ -5,6 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import { userAuthStateListener } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { createStackNavigator } from "@react-navigation/stack";
+import home from "../../screens/home";
 import { NavigationContainer } from "@react-navigation/native";
 import MedicalForm from "../../screens/medicalForm";
 export default function HomeScreen() {
@@ -25,7 +26,8 @@ export default function HomeScreen() {
   }, []);
   return (
     <Stack.Navigator>
-      {currentUserObj.surveyTaken == null ? (
+      {currentUserObj.currentUser.surveyTaken == false ||
+      currentUserObj.currentUser.surveyTaken == null ? (
         <Stack.Screen
           name="auth"
           component={MedicalForm}
@@ -35,8 +37,8 @@ export default function HomeScreen() {
         <>
           <Stack.Screen
             name="sus"
-            component={EmptyScreen}
-            options={{ headerShown: true }}
+            component={home}
+            options={{ headerShown: false }}
           />
         </>
       )}

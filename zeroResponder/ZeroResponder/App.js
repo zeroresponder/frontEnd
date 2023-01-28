@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import rootReducer from "./src/redux/reducers";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
+
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -26,6 +27,7 @@ export default function App() {
   } else {
     firebase.app();
   }
+
   return (
     <Provider store={store}>
       <Route />

@@ -9,6 +9,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MultipleSelectList } from "react-native-dropdown-select-list";
+import { SelectList } from "react-native-dropdown-select-list";
+import { useEffect } from "react";
+
+import { createUserData, setFormCompleted } from "../redux/actions/auth";
 export default OnboardingItem = ({ item }) => {
   const [age, setAge] = useState("");
   const [sex, setSex] = useState("");
@@ -22,15 +26,7 @@ export default OnboardingItem = ({ item }) => {
   const [ecg, setEcg] = useState("");
   const { width } = useWindowDimensions();
   const [selected, setSelected] = React.useState([]);
-
-  const medicalData = {
-    age: age,
-    sex: sex,
-    chol: chol,
-    fastingBloodSugar: fastingBloodSugar,
-    ecg: ecg,
-  };
-  const ecgData = {};
+  var wage = "";
   const data = [
     { key: "1", value: "Drowing" },
     { key: "2", value: "Car Crash" },
@@ -55,6 +51,49 @@ export default OnboardingItem = ({ item }) => {
     { key: "3", value: "Non Cardiac Chest Pain" },
     { key: "4", value: "No Chest Pain" },
   ];
+  let medicalData = {};
+  useEffect(() => {
+    console.log("THE ffing AGE IS : " + age);
+    medicalData["age"] = age;
+    console.log("INSIDE USE EFFECT FOR AGE " + JSON.stringify(medicalData));
+  }, [age]);
+
+  useEffect(() => {
+    console.log("QQQQQQ");
+  }, [item]);
+  const sendData = () => {
+    setFormCompleted();
+    console.log(
+      age,
+      sex,
+      chol,
+      fastingBloodSugar,
+      ecg,
+      ecgResult,
+      heartRate,
+      painType
+    );
+    console.log("INSIDE FETCH FINISH " + JSON.stringify(medicalData));
+    // createUserData(medicalData, accidentResponse);
+  };
+  useEffect(() => {
+    const fetchData = async () => {};
+    fetchData().catch(console.error);
+
+    const accidentResponse = {
+      selected: selected,
+    };
+  }, [
+    selected,
+    age,
+    sex,
+    chol,
+    fastingBloodSugar,
+    ecg,
+    ecgResult,
+    heartRate,
+    painType,
+  ]);
 
   if (item.type == 1) {
     return (
@@ -75,7 +114,10 @@ export default OnboardingItem = ({ item }) => {
     return (
       <View style={[styles.container, { width }]}>
         <TextInput
-          onChangeText={(text) => setAge(text)}
+          onChangeText={(text) => {
+            setAge(text);
+            console.log("setting age too : " + age);
+          }}
           style={{
             borderColor: "lightgray",
             borderBottomWidth: 1,
@@ -89,21 +131,7 @@ export default OnboardingItem = ({ item }) => {
           placeholder="Age"
           placeholderTextColor={"black"}
         />
-        <TextInput
-          onChangeText={(text) => setSex(text)}
-          style={{
-            borderColor: "lightgray",
-            borderBottomWidth: 1,
-            borderStyle: "solid",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
-          placeholder="Sex"
-          placeholderTextColor={"black"}
-        />
+
         <TextInput
           onChangeText={(text) => setChol(text)}
           style={{
@@ -179,6 +207,52 @@ export default OnboardingItem = ({ item }) => {
             <Text style={{ fontSize: 20 }}>No</Text>
           </TouchableOpacity>
         </View>
+        <Text
+          style={{
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            marginTop: 20,
+            paddingHorizontal: 40,
+            fontSize: 20,
+          }}
+        >
+          Sex
+        </Text>
+        <SelectList
+          setSelected={(val) => setSex(val)}
+          data={sexArray}
+          save="value"
+        />
+        <TouchableOpacity
+          style={{
+            height: 60,
+            width: 100,
+            backgroundColor: "#F8F8F8",
+            marginTop: 30,
+            borderRadius: 30,
+            borderWidth: 2,
+            borderColor: "grey",
+            textAlign: "center",
+            justifyContent: "center",
+            alignContent: "center",
+            borderColor: "#F8F8F8",
+          }}
+          onPress={() => {
+            sendData();
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: "800",
+              fontSize: 28,
+
+              color: "#493d8a",
+              textAlign: "center",
+            }}
+          >
+            Finish!
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -196,23 +270,24 @@ export default OnboardingItem = ({ item }) => {
         >
           Skip this page if you have not taken an ECG recently
         </Text>
-        <TextInput
-          onChangeText={(text) => setFastingBloodSugar(text)}
+        <Text
           style={{
-            borderColor: "lightgray",
-            borderBottomWidth: 1,
-            borderStyle: "solid",
             paddingVertical: 10,
             paddingHorizontal: 20,
             marginTop: 20,
             paddingHorizontal: 40,
             fontSize: 20,
           }}
-          placeholder="ECG Result"
-          placeholderTextColor={"black"}
+        >
+          Ecg Result
+        </Text>
+        <SelectList
+          setSelected={(val) => setEcgResult(val)}
+          data={ecgResultArray}
+          save="value"
         />
         <TextInput
-          onChangeText={(text) => setFastingBloodSugar(text)}
+          onChangeText={(text) => setHeartRate(text)}
           style={{
             borderColor: "lightgray",
             borderBottomWidth: 1,
@@ -226,20 +301,21 @@ export default OnboardingItem = ({ item }) => {
           placeholder="Max Heartrate"
           placeholderTextColor={"black"}
         />
-        <TextInput
-          onChangeText={(text) => setFastingBloodSugar(text)}
+        <Text
           style={{
-            borderColor: "lightgray",
-            borderBottomWidth: 1,
-            borderStyle: "solid",
             paddingVertical: 10,
             paddingHorizontal: 20,
             marginTop: 20,
             paddingHorizontal: 40,
             fontSize: 20,
           }}
-          placeholder="Did you have heart pain during the test?"
-          placeholderTextColor={"black"}
+        >
+          Pain Type
+        </Text>
+        <SelectList
+          setSelected={(val) => setPainType(val)}
+          data={painTypeArray}
+          save="value"
         />
 
         <View style={{ flex: 0.3 }}>
@@ -261,12 +337,43 @@ export default OnboardingItem = ({ item }) => {
             data={data}
             save="value"
             label="Categories"
+            maxHeight={300}
           />
         </View>
         <Image
           source={item.image}
           style={[styles.image, { width, resizeMode: "contain" }]}
         />
+        <TouchableOpacity
+          style={{
+            height: 60,
+            width: 100,
+            backgroundColor: "#F8F8F8",
+            marginTop: 30,
+            borderRadius: 30,
+            borderWidth: 2,
+            borderColor: "grey",
+            textAlign: "center",
+            justifyContent: "center",
+            alignContent: "center",
+            borderColor: "#F8F8F8",
+          }}
+          onPress={() => {
+            sendData();
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: "800",
+              fontSize: 28,
+
+              color: "#493d8a",
+              textAlign: "center",
+            }}
+          >
+            Finish!
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }

@@ -84,3 +84,57 @@ export const createUserData =
           reject();
         });
     });
+
+export const setFormCompleted = () => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      surveyTaken: true,
+    });
+};
+export const goToSettings = () => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      surveyTaken: false,
+    });
+};
+
+export const setFirstPageData = (data) => (dispatch) =>
+  new Promise((resolve, reject) => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        basicData: data,
+      });
+  });
+
+export const setSecondPageData = (data) => (dispatch) =>
+  new Promise((resolve, reject) => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        ecgData: data,
+      });
+  });
+
+export const setThirdPageData = (data) => (dispatch) =>
+  new Promise((resolve, reject) => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        comfortableResponses: data,
+      });
+  });
