@@ -56,15 +56,31 @@ export const login = (email, password) => (dispatch) =>
       });
   });
 
-export const createUserData = (medical_data, comfortable_responses) => (dispatch) =>
-  new Promise((resolve, reject) => {
+//const exampleMedData = {
+//   "age": 15,
+//   "sex": 1,
+//   "chol": 216,
+//    "fbs": 1,
+//   "hadECG": false,
+// }
+//
+// const comfortable_responses = ['cpr', 'drowning', 'first-aid']
+export const createUserData =
+  (medical_data, comfortable_responses) => (dispatch) =>
+    new Promise((resolve, reject) => {
       firebase
-      .firestore()
-      .collection("users")
-      .doc(firebase.auth().currentUser.uid)
-      .set({
-        medical_data: medical_data,
-        comfortable_responses: comfortable_responses,
-      })
-    })
-  }
+        .firestore()
+        .collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+          medical_data: medical_data,
+          comfortable_responses: comfortable_responses,
+        })
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          console.log("TANUJ FUCKED UP" + error);
+          reject();
+        });
+    });
