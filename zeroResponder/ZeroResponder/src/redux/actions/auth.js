@@ -55,3 +55,16 @@ export const login = (email, password) => (dispatch) =>
         reject();
       });
   });
+
+export const createUserData = (medical_data, comfortable_responses) => (dispatch) =>
+  new Promise((resolve, reject) => {
+      firebase
+      .firestore()
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .set({
+        medical_data: medical_data,
+        comfortable_responses: comfortable_responses,
+      })
+    })
+  }

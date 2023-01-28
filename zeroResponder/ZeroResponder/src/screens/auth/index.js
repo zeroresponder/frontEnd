@@ -135,7 +135,9 @@ export default function AuthScreen() {
           </ClipPath>
 
           <Image
-            href={"https://pbs.twimg.com/media/FXFcv8bXEAMMspr.jpg"}
+            href={
+              "https://i.pinimg.com/736x/f2/c0/58/f2c0580afc2a03235977acbda16e1dff.jpg"
+            }
             width={width + 100}
             height={height + 100}
             preserveAspectRatio="xMidYMid slice"

@@ -1,71 +1,45 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text } from "react-native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { Feather } from "@expo/vector-icons";
-
-const Tab = createMaterialBottomTabNavigator();
-
-const EmptyScreen = () => {
-  return (
-    <View>
-      <Text>
-        EMPTYU SCREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-      </Text>
-    </View>
-  );
-};
-
+import { userAuthStateListener } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import MedicalForm from "../../screens/medicalForm";
 export default function HomeScreen() {
+  const Stack = createStackNavigator();
+  const Tab = createMaterialBottomTabNavigator();
+  const currentUserObj = useSelector((state) => state.auth);
+  const EmptyScreen = () => {
+    return (
+      <View>
+        <Text>
+          EMPTYU SCREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        </Text>
+      </View>
+    );
+  };
+  useEffect(() => {
+    console.log(JSON.stringify(currentUserObj));
+  }, []);
   return (
-    <Tab.Navigator
-      barStyle={{ backgroundColor: "black" }}
-      initialRouteName="feed"
-    >
-      <Tab.Screen
-        name="Home"
-        component={EmptyScreen}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Feather name="home" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Circles"
-        component={EmptyScreen}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Feather name="circle" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Add"
-        component={EmptyScreen}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Feather name="plus-square" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Inbox"
-        component={EmptyScreen}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Feather name="message-square" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={EmptyScreen}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Feather name="user" size={24} color={color} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+    <Stack.Navigator>
+      {currentUserObj.surveyTaken == null ? (
+        <Stack.Screen
+          name="auth"
+          component={MedicalForm}
+          options={{ headerShown: false }}
+        />
+      ) : (
+        <>
+          <Stack.Screen
+            name="sus"
+            component={EmptyScreen}
+            options={{ headerShown: true }}
+          />
+        </>
+      )}
+    </Stack.Navigator>
   );
 }
