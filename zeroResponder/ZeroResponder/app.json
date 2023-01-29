@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "ZeroResponder",
-    "slug": "ZeroResponder",
+    "slug": "zeroresponder",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -31,6 +31,12 @@
     },
     "plugins": [
       "react-native-background-geolocation"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "152e31ae-3bbd-4e06-92bd-b8969a93362f"
+      }
+    },
+    "owner": "remindmeto"
   }
 }

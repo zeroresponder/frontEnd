@@ -56,7 +56,7 @@ export default OnboardingItem = ({ item }) => {
   const [emergencySex, setEmergencySex] = useState(null);
   const [emergencyChol, setEmergencyChol] = useState(null);
   const [emergencyEcg, setEmergencyEcg] = useState(null);
-  const [emregencyState, setEmergencyState] = useState(null);
+  const [emregencyState, setEmergencyState] = useState([]);
   const [emergencyFastingBloodSugar, setEmergencyFastingBloodSugar] =
     useState(null);
   const victimState = [
@@ -668,21 +668,19 @@ export default OnboardingItem = ({ item }) => {
             setSelected={(val) => setEmergencySelected(val)}
             data={data}
             save="value"
-            maxHeight={200}
+            maxHeight={100}
           />
         </View>
-        <Image
-          source={item.image}
-          style={[styles.image, { width, resizeMode: "contain" }]}
-        />
+
         <Text style={styles.title}>What state is victim in?</Text>
         <Text style={styles.description}>select all that apply</Text>
         <MultipleSelectList
-          setSelected={(val) => setEmergencyState(val.value)}
+          setSelected={(val) => setEmergencyState(val)}
           data={victimState}
           save="value"
           label="Categories"
-          maxHeight={100}
+          maxHeight={200}
+          onSelect={() => alert(emregencyState)}
         />
         <TouchableOpacity
           style={{

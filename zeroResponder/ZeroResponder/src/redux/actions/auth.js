@@ -9,6 +9,7 @@ import Device from "expo-device";
 import * as Location from "expo-location";
 export const userAuthStateListener = () => (dispatch) => {
   firebase.auth().onAuthStateChanged((user) => {
+    console.log("WWW");
     if (user) {
       dispatch(getCurrentUserData());
     } else {
@@ -329,4 +330,22 @@ export const setVictimState = (data) => {
     .update({
       victimState: data,
     });
+};
+
+export const getEmergencies = () => {
+  let markerArray = [];
+  firebase
+    .firestore()
+    .collection("emergencies")
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        markerArray.push(doc.data());
+        console.log(JSON.stringify(markerArray) + "QQQQQQQQ");
+      });
+      return markerArray;
+    })
+    .catch((e) => console.log(e));
+  console.log("RETURNING MARKER ARRAY     " + JSON.stringify(markerArray));
+  return markerArray;
 };
