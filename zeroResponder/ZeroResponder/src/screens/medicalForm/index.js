@@ -20,7 +20,7 @@ export default function MedicalForm() {
     if (currentIndex < slides.length - 1) {
       slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
     } else {
-      console.log(setFormCompleted());
+      setFormCompleted();
     }
   };
 
@@ -62,5 +62,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#3d5a80",
   },
 });

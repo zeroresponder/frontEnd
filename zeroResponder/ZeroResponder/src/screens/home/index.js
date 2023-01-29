@@ -10,7 +10,7 @@ import {
 import { goToSettings } from "../../redux/actions";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
-
+import { MotiView } from "moti";
 import MapScreen from "./map";
 export default function HomeScreens() {
   const navigation = useNavigation();
@@ -37,31 +37,20 @@ export default function HomeScreens() {
         style={{ flex: 0.5, alignContent: "center", justifyContent: "center" }}
       >
         <TouchableOpacity
-          style={{
-            alignSelf: "center",
-            height: 150,
-            width: 150,
-            borderRadius: 100,
-            borderColor: "black",
-            borderWidth: 2,
-            backgroundColor: "red",
-            justifyContent: "center",
-          }}
+          style={styles.emergencyButton}
           onPress={() => {
             navigation.navigate("emergencyScreen");
           }}
         >
-          <Text
-            style={{
-              fontSize: 28,
-              fontWeight: "500",
-              color: "black",
-              textAlign: "center",
-              justifyContent: "center",
-            }}
-          >
-            Emergency
-          </Text>
+          {[...Array(3).keys()].map((index) => {
+            return (
+              <View
+                key={index}
+                style={[StyleSheet.absoluteFillObject, styles.dot]}
+              />
+            );
+          })}
+          <Text style={styles.emergencyText}>Emergency</Text>
         </TouchableOpacity>
       </View>
       <View style={{ flex: 0.3 }}>
@@ -82,5 +71,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  emergencyText: {
+    fontSize: 28,
+    fontWeight: "500",
+    color: "black",
+    textAlign: "center",
+    justifyContent: "center",
+  },
+  emergencyButton: {
+    alignSelf: "center",
+    height: 150,
+    width: 150,
+    borderRadius: 100,
+    borderColor: "black",
+    borderWidth: 2,
+    backgroundColor: "#ee6c4d",
+    justifyContent: "center",
+  },
+  dot: {
+    width: 150,
+    height: 150,
+    borderRadius: 150,
+    backgroundColor: "red",
   },
 });

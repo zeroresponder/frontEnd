@@ -70,8 +70,7 @@ export default OnboardingItem = ({ item }) => {
     { key: "3", value: "CPR" },
     { key: "4", value: "First Aid" },
     { key: "5", value: "Shooting" },
-    { key: "6", value: "Diary Products" },
-    { key: "7", value: "Drinks" },
+    { key: "6", value: "Collapse" },
   ];
   const sexArray = [
     { key: "1", value: "Male" },
@@ -198,20 +197,6 @@ export default OnboardingItem = ({ item }) => {
       setEmergencyType(emergencySelected);
     }
   }, [emergencySelected]);
-  const sendData = () => {
-    console.log(
-      age,
-      sex,
-      chol,
-      fastingBloodSugar,
-      ecg,
-      ecgResult,
-      heartRate,
-      painType
-    );
-    console.log("INSIDE FETCH FINISH " + JSON.stringify(medicalData));
-    // createUserData(medicalData, accidentResponse);
-  };
 
   if (item.type == 1) {
     return (
@@ -234,143 +219,64 @@ export default OnboardingItem = ({ item }) => {
         <TextInput
           onChangeText={(text) => {
             setAge(text);
-            console.log("setting age too : " + age);
           }}
-          style={{
-            borderColor: "lightgray",
-            borderBottomWidth: 1,
-            borderStyle: "solid",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
+          style={styles.textInput}
           placeholder="Age"
-          placeholderTextColor={"black"}
+          placeholderTextColor={"#98c1d9"}
         />
 
         <TextInput
           onChangeText={(text) => setChol(text)}
-          style={{
-            borderColor: "lightgray",
-            borderBottomWidth: 1,
-            borderStyle: "solid",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
+          style={styles.textInput}
           placeholder="Cholesterol"
-          placeholderTextColor={"black"}
+          placeholderTextColor={"#98c1d9"}
         />
         <TextInput
           onChangeText={(text) => setFastingBloodSugar(text)}
-          style={{
-            borderColor: "lightgray",
-            borderBottomWidth: 1,
-            borderStyle: "solid",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
+          style={styles.textInput}
           placeholder="Fasting Blood Sugar"
-          placeholderTextColor={"black"}
+          placeholderTextColor={"#98c1d9"}
         />
-        <Text
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 17,
-          }}
-        >
-          Do you have chest pain?
-        </Text>
+        <Text style={styles.YesNoText}>Do you have chest pain?</Text>
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
-            style={{
-              borderWidth: 2,
-              borderColor: "grey",
-              borderRadius: 10,
-              backgroundColor: "lightgrey",
-              margin: 10,
-              padding: 5,
-            }}
+            style={styles.YesNoButton}
             onPress={() => {
               setEcg(true);
               console.log(ecg);
             }}
           >
-            <Text style={{ fontSize: 20 }}>Yes</Text>
+            <Text style={styles.buttonText}>Yes</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{
-              borderWidth: 2,
-              borderColor: "grey",
-              borderRadius: 10,
-              backgroundColor: "lightgrey",
-              margin: 10,
-              padding: 5,
-            }}
+            style={styles.YesNoButton}
             onPress={() => {
               setEcg(false);
               console.log(ecg);
             }}
           >
-            <Text style={{ fontSize: 20 }}>No</Text>
+            <Text style={styles.buttonText}>No</Text>
           </TouchableOpacity>
         </View>
-        <Text
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
-        >
-          Sex
-        </Text>
+        <Text style={styles.YesNoText}>Sex</Text>
         <SelectList
           setSelected={(val) => setSex(val)}
           data={sexArray}
           save="value"
+          search={false}
+          backgroundColor="#98c1d9"
+          maxHeight={90}
+          boxStyles={{
+            backgroundColor: "#98c1d9",
+            borderColor: "#e0fbfc",
+          }}
+          inputStyles={{ color: "#e0fbfc" }}
+          dropdownStyles={{
+            backgroundColor: "#98c1d9",
+            borderColor: "#e0fbfc",
+          }}
+          dropdownTextStyles={{ color: "#e0fbfc" }}
         />
-        <TouchableOpacity
-          style={{
-            height: 60,
-            width: 100,
-            backgroundColor: "#F8F8F8",
-            marginTop: 30,
-            borderRadius: 30,
-            borderWidth: 2,
-            borderColor: "grey",
-            textAlign: "center",
-            justifyContent: "center",
-            alignContent: "center",
-            borderColor: "#F8F8F8",
-          }}
-          onPress={() => {
-            sendData();
-          }}
-        >
-          <Text
-            style={{
-              fontWeight: "800",
-              fontSize: 28,
-
-              color: "#493d8a",
-              textAlign: "center",
-            }}
-          >
-            Finish!
-          </Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -380,60 +286,53 @@ export default OnboardingItem = ({ item }) => {
         <Text
           style={{
             fontWeight: "300",
-            color: "#62656b",
+            color: "#98c1d9",
             textAlign: "center",
             paddingHorizontal: 64,
             marginTop: 30,
           }}
         >
-          Skip this page if you have not taken an ECG recently
+          Skip this page if you haven't taken an ECG recently
         </Text>
-        <Text
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
-        >
-          Ecg Result
-        </Text>
+        <Text style={styles.YesNoText}>Ecg Result</Text>
         <SelectList
           setSelected={(val) => setEcgResult(val)}
           data={ecgResultArray}
           save="value"
+          search={false}
+          boxStyles={{
+            backgroundColor: "#98c1d9",
+            borderColor: "#e0fbfc",
+          }}
+          inputStyles={{ color: "#e0fbfc" }}
+          dropdownStyles={{
+            backgroundColor: "#98c1d9",
+            borderColor: "#e0fbfc",
+          }}
+          dropdownTextStyles={{ color: "#e0fbfc" }}
         />
         <TextInput
           onChangeText={(text) => setHeartRate(text)}
-          style={{
-            borderColor: "lightgray",
-            borderBottomWidth: 1,
-            borderStyle: "solid",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
+          style={styles.textInput}
           placeholder="Max Heartrate"
-          placeholderTextColor={"black"}
+          placeholderTextColor={"#98c1d9"}
         />
-        <Text
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
-        >
-          Pain Type
-        </Text>
+        <Text style={styles.YesNoText}>Pain Type</Text>
         <SelectList
           setSelected={(val) => setPainType(val)}
           data={painTypeArray}
           save="value"
+          search={false}
+          boxStyles={{
+            backgroundColor: "#98c1d9",
+            borderColor: "#e0fbfc",
+          }}
+          inputStyles={{ color: "#e0fbfc" }}
+          dropdownStyles={{
+            backgroundColor: "#98c1d9",
+            borderColor: "#e0fbfc",
+          }}
+          dropdownTextStyles={{ color: "#e0fbfc" }}
         />
 
         <View style={{ flex: 0.3 }}>
@@ -454,44 +353,25 @@ export default OnboardingItem = ({ item }) => {
             setSelected={(val) => setSelected(val)}
             data={data}
             save="value"
-            label="Categories"
-            maxHeight={300}
+            label="Responses"
+            maxHeight={200}
+            search={false}
+            boxStyles={{
+              backgroundColor: "#98c1d9",
+              borderColor: "#e0fbfc",
+            }}
+            inputStyles={{ color: "#e0fbfc", borderColor: "#e0fbfc" }}
+            dropdownStyles={{
+              backgroundColor: "#98c1d9",
+              borderColor: "#e0fbfc",
+            }}
+            dropdownTextStyles={{ color: "#e0fbfc" }}
           />
         </View>
         <Image
           source={item.image}
           style={[styles.image, { width, resizeMode: "contain" }]}
         />
-        <TouchableOpacity
-          style={{
-            height: 60,
-            width: 100,
-            backgroundColor: "#F8F8F8",
-            marginTop: 30,
-            borderRadius: 30,
-            borderWidth: 2,
-            borderColor: "grey",
-            textAlign: "center",
-            justifyContent: "center",
-            alignContent: "center",
-            borderColor: "#F8F8F8",
-          }}
-          onPress={() => {
-            sendData();
-          }}
-        >
-          <Text
-            style={{
-              fontWeight: "800",
-              fontSize: 28,
-
-              color: "#493d8a",
-              textAlign: "center",
-            }}
-          >
-            Finish!
-          </Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -519,49 +399,22 @@ export default OnboardingItem = ({ item }) => {
             setEmergencyAge(text);
             console.log("setting age too : " + age);
           }}
-          style={{
-            borderColor: "lightgray",
-            borderBottomWidth: 1,
-            borderStyle: "solid",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
+          style={styles.textInput}
           placeholder="Age"
-          placeholderTextColor={"black"}
+          placeholderTextColor={"#98c1d9"}
         />
 
         <TextInput
           onChangeText={(text) => setEmergencyChol(text)}
-          style={{
-            borderColor: "lightgray",
-            borderBottomWidth: 1,
-            borderStyle: "solid",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
+          style={styles.textInput}
           placeholder="Cholesterol"
-          placeholderTextColor={"black"}
+          placeholderTextColor={"#98c1d9"}
         />
         <TextInput
           onChangeText={(text) => setEmergencyFastingBloodSugar(text)}
-          style={{
-            borderColor: "lightgray",
-            borderBottomWidth: 1,
-            borderStyle: "solid",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
+          style={styles.textInput}
           placeholder="Fasting Blood Sugar"
-          placeholderTextColor={"black"}
+          placeholderTextColor={"#98c1d9"}
         />
         <Text
           style={{
@@ -623,6 +476,17 @@ export default OnboardingItem = ({ item }) => {
           setSelected={(val) => setEmergencySex(val)}
           data={sexArray}
           save="value"
+          search={false}
+          boxStyles={{
+            backgroundColor: "#98c1d9",
+            borderColor: "#e0fbfc",
+          }}
+          inputStyles={{ color: "#e0fbfc" }}
+          dropdownStyles={{
+            backgroundColor: "#98c1d9",
+            borderColor: "#e0fbfc",
+          }}
+          dropdownTextStyles={{ color: "#e0fbfc" }}
         />
         <TouchableOpacity
           style={{
@@ -669,6 +533,17 @@ export default OnboardingItem = ({ item }) => {
             data={data}
             save="value"
             maxHeight={100}
+            search={false}
+            boxStyles={{
+              backgroundColor: "#98c1d9",
+              borderColor: "#e0fbfc",
+            }}
+            inputStyles={{ color: "#e0fbfc" }}
+            dropdownStyles={{
+              backgroundColor: "#98c1d9",
+              borderColor: "#e0fbfc",
+            }}
+            dropdownTextStyles={{ color: "#e0fbfc" }}
           />
         </View>
 
@@ -681,6 +556,17 @@ export default OnboardingItem = ({ item }) => {
           label="Categories"
           maxHeight={200}
           onSelect={() => alert(emregencyState)}
+          search={false}
+          boxStyles={{
+            backgroundColor: "#98c1d9",
+            borderColor: "#e0fbfc",
+          }}
+          inputStyles={{ color: "#e0fbfc" }}
+          dropdownStyles={{
+            backgroundColor: "#98c1d9",
+            borderColor: "#e0fbfc",
+          }}
+          dropdownTextStyles={{ color: "#e0fbfc" }}
         />
         <TouchableOpacity
           style={{
@@ -722,6 +608,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#3d5a80",
   },
   image: {
     flex: 0.7,
@@ -731,12 +618,12 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     fontSize: 28,
     marginBottom: 10,
-    color: "#493d8a",
+    color: "#98c1d9",
     textAlign: "center",
   },
   description: {
     fontWeight: "300",
-    color: "#62656b",
+    color: "#98c1d9",
     textAlign: "center",
     paddingHorizontal: 64,
   },
@@ -749,5 +636,36 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: 18,
     textAlign: "center",
+  },
+  textInput: {
+    borderColor: "#e0fbfc",
+    borderBottomWidth: 2,
+    borderStyle: "solid",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginTop: 20,
+    paddingHorizontal: 40,
+    fontSize: 20,
+    placeholderTextColor: "#98c1d9",
+    color: "#98c1d9",
+  },
+  YesNoText: {
+    marginTop: 15,
+    paddingHorizontal: 40,
+    fontSize: 20,
+    color: "#98c1d9",
+    margin: 10,
+  },
+  YesNoButton: {
+    borderWidth: 1,
+    borderColor: "#e0fbfc",
+    borderRadius: 30,
+    backgroundColor: "#98c1d9",
+    margin: 10,
+    padding: 5,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: "#e0fbfc",
   },
 });
