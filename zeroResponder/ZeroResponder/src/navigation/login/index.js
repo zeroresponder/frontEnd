@@ -5,6 +5,7 @@ import AuthScreen from "../../screens/auth";
 import { userAuthStateListener } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { createStackNavigator } from "@react-navigation/stack";
+import Navigator from "../navigator";
 import HomeScreen from "../home";
 export default function MainNavigator() {
   const Stack = createStackNavigator();
@@ -40,25 +41,5 @@ export default function MainNavigator() {
     return <View></View>;
   };
 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {currentUserObj.currentUser == null ? (
-          <Stack.Screen
-            name="auth"
-            component={AuthScreen}
-            options={{ headerShown: false }}
-          />
-        ) : (
-          <>
-            <Stack.Screen
-              name="home"
-              component={HomeScreen}
-              options={{ headerShown: false }}
-            />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  return null;
 }

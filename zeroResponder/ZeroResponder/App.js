@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState, useRef, useEffect } from "react";
-import Route from "./src/navigation/login";
+import Route from "./src/navigation/route";
 import { Provider } from "react-redux";
 import rootReducer from "./src/redux/reducers";
 import { applyMiddleware, createStore } from "redux";

@@ -1,11 +1,33 @@
 import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, FlatList, Animated } from "react-native";
-import slides from "./slides";
-import Paginator from "../../components/Paginator";
-import NextButton from "../../components/NextButton";
-import OnboardingItem from "../../components/OnboardingItem";
-import { setFormCompleted } from "../../redux/actions";
-export default function MedicalForm() {
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
+
+import { StackActions, useNavigation } from "@react-navigation/native";
+import Paginator from "../../../../components/Paginator";
+import NextButton from "../../../../components/NextButton";
+import OnboardingItem from "../../../../components/OnboardingItem";
+import * as Icon from "react-native-feather";
+export default function EmergencyScreenForm() {
+  const slides = [
+    {
+      id: "1",
+      type: "5",
+    },
+    {
+      id: "2",
+      type: "6",
+    },
+    {
+      id: "3",
+      type: "7",
+    },
+  ];
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef(null);
@@ -15,12 +37,12 @@ export default function MedicalForm() {
   }).current;
 
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
-  ///ww
+
   const scrollTo = () => {
     if (currentIndex < slides.length - 1) {
       slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
     } else {
-      console.log(setFormCompleted());
+      console.log("Last item.");
     }
   };
 

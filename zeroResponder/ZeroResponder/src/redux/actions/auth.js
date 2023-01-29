@@ -1,8 +1,12 @@
 import { USER_STATE_CHANGE } from "../constants";
 import { useDispatch } from "react-redux";
+import { Platform, Text, View, StyleSheet } from "react-native";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import Device from "expo-device";
+import * as Location from "expo-location";
 export const userAuthStateListener = () => (dispatch) => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -34,8 +38,7 @@ export const register = (email, password) => (dispatch) =>
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        console.log("OPLEASEEEEEEEEE");
-        resolve();
+        console.log(firebase.auth().currentUser);
       })
       .catch((error) => {
         console.log(error);
@@ -95,6 +98,87 @@ export const setFormCompleted = () => {
       surveyTaken: true,
     });
 };
+
+export const setPainTypeDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      painType: data,
+    });
+};
+export const setHeartRateDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      maxHeartRate: data,
+    });
+};
+export const setEcgResultDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      ECGResult: data,
+    });
+};
+export const setEcgDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      Chestpain: data,
+    });
+};
+export const setFBSDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      fastingBloodSugar: data,
+    });
+};
+export const setCholDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      chol: data,
+    });
+};
+export const setSexDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      sex: data,
+    });
+};
+export const setAgeDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      age: data,
+    });
+};
 export const goToSettings = () => {
   console.log(firebase.auth().currentUser.uid);
   firebase
@@ -138,3 +222,111 @@ export const setThirdPageData = (data) => (dispatch) =>
         comfortableResponses: data,
       });
   });
+
+export const setResponseWilling = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      willingToRespond: data,
+    });
+};
+
+export const startEmergency = (location) => {
+  console.log("SStarting emergency");
+  firebase
+    .firestore()
+    .collection("emergencies")
+    .doc(firebase.auth().currentUser.uid)
+    .get()
+    .then((snapshot) => {
+      if (!snapshot.exists) {
+        console.log("YESSS");
+        firebase
+          .firestore()
+          .collection("emergencies")
+          .doc(firebase.auth().currentUser.uid)
+          .set({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          })
+          .catch((e) => console.log(e));
+      }
+    });
+};
+export const setEmergencyAgeDB = (data) => {
+  console.log("SETTING NEW AGE FOR EMERGENCY");
+
+  firebase
+    .firestore()
+    .collection("emergencies")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      age: data,
+    })
+    .catch((e) => console.log(e));
+};
+export const setEmergencyCholDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("emergencies")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      chol: data,
+    });
+};
+export const setEmergencyFBSDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("emergencies")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      fastingBloodSugar: data,
+    });
+};
+
+export const setEmergencyECGDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("emergencies")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      chestPain: data,
+    });
+};
+
+export const setEmergencySexDB = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("emergencies")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      sex: data,
+    });
+};
+export const setEmergencyType = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("emergencies")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      emergencyType: data,
+    });
+};
+export const setVictimState = (data) => {
+  console.log(firebase.auth().currentUser.uid);
+  firebase
+    .firestore()
+    .collection("emergencies")
+    .doc(firebase.auth().currentUser.uid)
+    .update({
+      victimState: data,
+    });
+};
