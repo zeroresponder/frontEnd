@@ -416,67 +416,34 @@ export default OnboardingItem = ({ item }) => {
           placeholder="Fasting Blood Sugar"
           placeholderTextColor={"#98c1d9"}
         />
-        <Text
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 17,
-          }}
-        >
-          Do you have chest pain?
-        </Text>
+        <Text style={styles.YesNoText}>Do you have chest pain?</Text>
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
-            style={{
-              borderWidth: 2,
-              borderColor: "grey",
-              borderRadius: 10,
-              backgroundColor: "lightgrey",
-              margin: 10,
-              padding: 5,
-            }}
+            style={styles.YesNoButton}
             onPress={() => {
               setEmergencyEcg(true);
               console.log(ecg);
             }}
           >
-            <Text style={{ fontSize: 20 }}>Yes</Text>
+            <Text style={styles.buttonText}>Yes</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{
-              borderWidth: 2,
-              borderColor: "grey",
-              borderRadius: 10,
-              backgroundColor: "lightgrey",
-              margin: 10,
-              padding: 5,
-            }}
+            style={styles.YesNoButton}
             onPress={() => {
               setEmergencyEcg(false);
               console.log(ecg);
             }}
           >
-            <Text style={{ fontSize: 20 }}>No</Text>
+            <Text style={styles.buttonText}>No</Text>
           </TouchableOpacity>
         </View>
-        <Text
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginTop: 20,
-            paddingHorizontal: 40,
-            fontSize: 20,
-          }}
-        >
-          Sex
-        </Text>
+        <Text style={styles.YesNoText}>Sex</Text>
         <SelectList
           setSelected={(val) => setEmergencySex(val)}
           data={sexArray}
           save="value"
           search={false}
+          maxHeight={90}
           boxStyles={{
             backgroundColor: "#98c1d9",
             borderColor: "#e0fbfc",
@@ -488,36 +455,6 @@ export default OnboardingItem = ({ item }) => {
           }}
           dropdownTextStyles={{ color: "#e0fbfc" }}
         />
-        <TouchableOpacity
-          style={{
-            height: 60,
-            width: 100,
-            backgroundColor: "#F8F8F8",
-            marginTop: 30,
-            borderRadius: 30,
-            borderWidth: 2,
-            borderColor: "grey",
-            textAlign: "center",
-            justifyContent: "center",
-            alignContent: "center",
-            borderColor: "#F8F8F8",
-          }}
-          onPress={() => {
-            sendData();
-          }}
-        >
-          <Text
-            style={{
-              fontWeight: "800",
-              fontSize: 28,
-
-              color: "#493d8a",
-              textAlign: "center",
-            }}
-          >
-            Finish!
-          </Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -527,7 +464,7 @@ export default OnboardingItem = ({ item }) => {
         <View style={{ flex: 0.2 }}></View>
         <View style={{ flex: 0.8, marginTop: 40 }}>
           <Text style={styles.title}>What happened?</Text>
-          <View style={{ flex: 0.5 }}></View>
+
           <SelectList
             setSelected={(val) => setEmergencySelected(val)}
             data={data}
@@ -555,7 +492,6 @@ export default OnboardingItem = ({ item }) => {
           save="value"
           label="Categories"
           maxHeight={200}
-          onSelect={() => alert(emregencyState)}
           search={false}
           boxStyles={{
             backgroundColor: "#98c1d9",
@@ -568,36 +504,6 @@ export default OnboardingItem = ({ item }) => {
           }}
           dropdownTextStyles={{ color: "#e0fbfc" }}
         />
-        <TouchableOpacity
-          style={{
-            height: 60,
-            width: 100,
-            backgroundColor: "#F8F8F8",
-            marginTop: 30,
-            borderRadius: 30,
-            borderWidth: 2,
-            borderColor: "grey",
-            textAlign: "center",
-            justifyContent: "center",
-            alignContent: "center",
-            borderColor: "#F8F8F8",
-          }}
-          onPress={() => {
-            sendData();
-          }}
-        >
-          <Text
-            style={{
-              fontWeight: "800",
-              fontSize: 28,
-
-              color: "#493d8a",
-              textAlign: "center",
-            }}
-          >
-            Finish!
-          </Text>
-        </TouchableOpacity>
       </View>
     );
   }

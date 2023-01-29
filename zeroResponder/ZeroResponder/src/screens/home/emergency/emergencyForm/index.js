@@ -81,6 +81,7 @@ export default function EmergencyScreenForm() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#3d5a80",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

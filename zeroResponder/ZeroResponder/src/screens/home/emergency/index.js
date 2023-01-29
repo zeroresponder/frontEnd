@@ -23,45 +23,51 @@ export default function EmergencyScreen() {
   return (
     <Animated.View
       entering={FadeIn.duration(1000)}
-      style={{ flex: 1, backgroundColor: "red" }}
+      style={{ flex: 1, backgroundColor: "#ee6c4d" }}
     >
       <View style={{ flex: 0.2 }}></View>
-      <View style={{ flex: 0.5, justifyContent: "space-around" }}>
-        <TouchableOpacity
-          style={{
-            backgroundColor: "lightgrey",
-            height: 100,
-            justifyContent: "center",
-            borderRadius: 20,
-            borderWidth: 3,
-          }}
-        >
-          <Text
-            style={{ fontSize: 60, fontWeight: "bold", textAlign: "center" }}
+      <View
+        style={{
+          flex: 0.5,
+          justifyContent: "space-around",
+          flexDirection: "column",
+        }}
+      >
+        <Animated.View entering={LightSpeedInRight}>
+          <TouchableOpacity style={styles.reportButtons}>
+            <Text style={styles.buttonText}>Self Report</Text>
+          </TouchableOpacity>
+        </Animated.View>
+        <Animated.View entering={LightSpeedInRight}>
+          <TouchableOpacity
+            style={styles.reportButtons}
+            onPress={() => {
+              navigation.navigate("emergencyScreenForm");
+            }}
           >
-            Self Report
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            backgroundColor: "lightgrey",
-            height: 100,
-            justifyContent: "center",
-            borderRadius: 20,
-            borderWidth: 3,
-          }}
-          onPress={() => {
-            navigation.navigate("emergencyScreenForm");
-          }}
-        >
-          <Text
-            style={{ fontSize: 40, fontWeight: "bold", textAlign: "center" }}
-          >
-            Report Emergency
-          </Text>
-        </TouchableOpacity>
+            <Text style={styles.buttonText} entering={LightSpeedInRight}>
+              Report Emergency
+            </Text>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
       <View style={{ flex: 0.2 }}></View>
     </Animated.View>
   );
 }
+const styles = StyleSheet.create({
+  reportButtons: {
+    backgroundColor: "#3d5a80",
+    borderColor: "#293241",
+    borderWidth: 3,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 100,
+  },
+  buttonText: {
+    fontSize: 40,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#e0fbfc",
+  },
+});

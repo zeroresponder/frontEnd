@@ -11,12 +11,13 @@ import { goToSettings } from "../../redux/actions";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
 import { MotiView } from "moti";
+import { Easing } from "react-native-reanimated";
 import MapScreen from "./map";
 export default function HomeScreens() {
   const navigation = useNavigation();
   console.log("I wanna die");
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "#3d5a80" }}>
       <View
         style={{
           flex: 0.3,
@@ -26,11 +27,12 @@ export default function HomeScreens() {
         }}
       >
         <TouchableOpacity
+          style={{ marginRight: 30 }}
           onPress={() => {
             goToSettings();
           }}
         >
-          <Icon.Settings color={"black"} width={32} height={32} />
+          <Icon.Settings color={"#e0fbfc"} width={32} height={32} />
         </TouchableOpacity>
       </View>
       <View
@@ -42,9 +44,19 @@ export default function HomeScreens() {
             navigation.navigate("emergencyScreen");
           }}
         >
-          {[...Array(3).keys()].map((index) => {
+          {[...Array(10).keys()].map((index) => {
             return (
-              <View
+              <MotiView
+                from={{ opacity: 0.7, scale: 1 }}
+                animate={{ opacity: 0, scale: 4 }}
+                transition={{
+                  type: "timing",
+                  duration: 4000,
+                  easing: Easing.out(Easing.ease),
+                  delay: index * 400,
+                  repeatReverse: false,
+                  loop: true,
+                }}
                 key={index}
                 style={[StyleSheet.absoluteFillObject, styles.dot]}
               />
@@ -53,13 +65,36 @@ export default function HomeScreens() {
           <Text style={styles.emergencyText}>Emergency</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ flex: 0.3 }}>
+      <View
+        style={{
+          alignContent: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 40,
+            color: "#e0fbfc",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
+          ↓ Jump To Map ↓
+        </Text>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("mapScreen");
           }}
         >
-          <Icon.MapPin color={"black"} width={32} height={32} />
+          <View
+            style={{
+              justifyContent: "center",
+              alignContent: "center",
+              marginHorizontal: 165,
+            }}
+          >
+            <Icon.MapPin color={"#e0fbfc"} width={50} height={50} />
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -68,6 +103,7 @@ export default function HomeScreens() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#3d5a80",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -75,7 +111,7 @@ const styles = StyleSheet.create({
   emergencyText: {
     fontSize: 28,
     fontWeight: "500",
-    color: "black",
+    color: "#3d5a80",
     textAlign: "center",
     justifyContent: "center",
   },
@@ -84,7 +120,7 @@ const styles = StyleSheet.create({
     height: 150,
     width: 150,
     borderRadius: 100,
-    borderColor: "black",
+    borderColor: "#3d5a80",
     borderWidth: 2,
     backgroundColor: "#ee6c4d",
     justifyContent: "center",
@@ -93,6 +129,23 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 150,
-    backgroundColor: "red",
+    backgroundColor: "#ee6c4d",
+  },
+  YesNoText: {
+    marginTop: 15,
+    paddingHorizontal: 40,
+    fontSize: 20,
+    color: "#98c1d9",
+    margin: 10,
+  },
+  YesNoButton: {
+    borderWidth: 1,
+    borderColor: "#e0fbfc",
+    borderRadius: 30,
+    backgroundColor: "#98c1d9",
+    margin: 10,
+    justifyContent: "center",
+    alignContent: "center",
+    padding: 5,
   },
 });
