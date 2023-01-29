@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import rootReducer from "./src/redux/reducers";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
-
+import "react-native-gesture-handler";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";

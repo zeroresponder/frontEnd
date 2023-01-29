@@ -17,8 +17,13 @@ import Animated, {
 } from "react-native-reanimated";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
+import { selfReport } from "../../../redux/actions";
 export default function EmergencyScreen() {
   const navigation = useNavigation();
+  const doesJitHaveHeartDisease = async () => {
+    await selfReport();
+    navigation.navigate("chatScreen");
+  };
   console.log("wasd");
   return (
     <Animated.View
@@ -34,7 +39,12 @@ export default function EmergencyScreen() {
         }}
       >
         <Animated.View entering={LightSpeedInRight}>
-          <TouchableOpacity style={styles.reportButtons}>
+          <TouchableOpacity
+            style={styles.reportButtons}
+            onPress={() => {
+              doesJitHaveHeartDisease();
+            }}
+          >
             <Text style={styles.buttonText}>Self Report</Text>
           </TouchableOpacity>
         </Animated.View>

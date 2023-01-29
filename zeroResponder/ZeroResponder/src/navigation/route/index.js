@@ -11,6 +11,7 @@ import HomeScreens from "../../screens/home";
 import MapScreen from "../../screens/home/map";
 import EmergencyScreenForm from "../../screens/home/emergency/emergencyForm";
 import EmergencyScreen from "../../screens/home/emergency";
+import Chat from "../../screens/home/emergency/emergencyChat";
 const Stack = createStackNavigator();
 
 export default function MainNavigator() {
@@ -71,6 +72,11 @@ export default function MainNavigator() {
                 <Stack.Screen
                   name="emergencyScreenForm"
                   component={EmergencyScreenForm}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="chatScreen"
+                  component={Chat}
                   options={{ headerShown: false }}
                 />
               </>

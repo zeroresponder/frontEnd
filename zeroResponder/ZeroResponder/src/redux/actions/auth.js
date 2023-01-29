@@ -235,6 +235,100 @@ export const setResponseWilling = (data) => {
     });
 };
 
+const checkForHeartDisease = async (data) => {
+  const url = `https://92c6-76-21-126-166.ngrok.io/predict?age=${data.age}&sex=${data.sex}&cp=${data.painType}&chol=${data.chol}&fbs=${data.fastingBloodSugar}&restecg=${data.ECGResult}&thalach=${data.maxHeartRate}&exang=${data.Chestpain}`;
+  console.log("URLLL" + url);
+  await fetch(url)
+    .then((response) => response.json())
+    .then((responseJson) => {
+      return responseJson["result"];
+    });
+};
+
+const translateData = (data) => {
+  if (data.ECGResult == "Mild/Moderate Abnormality") {
+    data.ECGResult = 2;
+  } else if (data.ECGResult == "Severe") {
+    data.ECGResult = 0;
+  } else if (data.ECGResult == "Normal") {
+    data.ECGResult = 1;
+  } else {
+    throw new Error(
+      "ECG Result not formatted correctly, should be Mild/Moderate Abnormality, Severe, or Normal"
+    );
+  }
+
+  if (data.painType == "Squeezing") {
+    data.painType = 3;
+  } else if (data.painType == "Other Chest Pain") {
+    data.painType = 1;
+  } else if (data.painType == "Non Cardiac Chest Pain") {
+    data.painType = 2;
+  } else if (data.painType == "No Chest Pain") {
+    data.painType = 0;
+  } else {
+    throw new Error(
+      "Chest pain not formatted correctly, should be Squeezing, Other chest Pain, non cardiac chest pain, or no chest pain"
+    );
+  }
+
+  if (data.sex == "Male") {
+    data.sex = 1;
+  } else if (data.sex == "Female") {
+    data.sex = 1;
+  } else {
+    throw new Error("Sex formatted incorrectly");
+  }
+
+  if (data.Chestpain == true) {
+    data.Chestpain = 1;
+  } else if (data.Chestpain == false) {
+    data.Chestpain = 0;
+  } else {
+    throw new Error("Chest pain not formatted");
+  }
+  if (parseInt(data.fastingBloodSugar) > 120) {
+    data.fastingBloodSugar = 1;
+  } else if (parseInt(data.fastingBloodSugar) < 120) {
+    data.fastingBloodSugar = 0;
+  } else {
+    throw new Error("fastingBloodSugar formatted incorrectly");
+  }
+
+  return data;
+};
+export const selfReport = async () => {
+  console.log("WE IN THE MAINF RAME");
+  let data = await firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .get()
+    .then((snapshot) => {
+      return snapshot.data();
+    });
+  console.log(JSON.stringify(data) + " WE IN SELF REPORT WITH DATA");
+  const temp_data = translateData(data);
+  const result = await checkForHeartDisease(temp_data);
+  if (result > 0.5) {
+    data.emergencyType = "CPR/Heart Attach";
+  } else {
+    data.emergencyType = "unknown";
+  }
+
+  let location = await Location.getCurrentPositionAsync({});
+
+  data.latitude = location.coords.latitude;
+  data.longitude = location.coords.longitude;
+  data.responses = [];
+  console.log(JSON.stringify(data));
+
+  firebase
+    .firestore()
+    .collection("emergencies")
+    .doc(firebase.auth().currentUser.uid)
+    .set(data);
+};
 export const startEmergency = (location) => {
   console.log("SStarting emergency");
   firebase
@@ -252,6 +346,7 @@ export const startEmergency = (location) => {
           .set({
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
+            responses: [],
           })
           .catch((e) => console.log(e));
       }

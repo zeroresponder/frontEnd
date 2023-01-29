@@ -67,7 +67,7 @@ export default OnboardingItem = ({ item }) => {
   const data = [
     { key: "1", value: "Drowing" },
     { key: "2", value: "Car Crash" },
-    { key: "3", value: "CPR" },
+    { key: "3", value: "CPR/Heart Attack" },
     { key: "4", value: "First Aid" },
     { key: "5", value: "Shooting" },
     { key: "6", value: "Collapse" },
