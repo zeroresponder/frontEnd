@@ -136,9 +136,9 @@ export default function AuthScreen() {
 
           <Image
             href={
-              "https://i.pinimg.com/736x/f2/c0/58/f2c0580afc2a03235977acbda16e1dff.jpg"
+              "https://kslnewsradio.com/wp-content/uploads/2021/01/Getty-first-responder-e1609546394842-620x370.jpg"
             }
-            width={width + 100}
+            width={width}
             height={height + 100}
             preserveAspectRatio="xMidYMid slice"
             clipPath="url(#clipPathId)"
@@ -152,26 +152,30 @@ export default function AuthScreen() {
           >
             <View
               style={{
-                backgroundColor: "rgb(17, 51, 46)",
-                opacity: 0.8,
+                marginTop: 40,
+                backgroundColor: "#3d5a80",
+                opacity: 0.9,
                 flexDirection: "row",
                 justifyContent: "center",
                 borderRadius: 30,
                 borderWidth: 3,
-                borderColor: "grey",
+                borderColor: "#e0fbfc",
+                alignContent: "center",
               }}
             >
               <Feather
-                name="heart"
+                name="shield"
                 size={60}
-                color="rgb(237, 229, 204)"
-                style={{ marginTop: 9, marginHorizontal: 10 }}
+                color="#e0fbfc"
+                style={{ padding: 5, marginHorizontal: 8 }}
               />
               <Text
                 style={{
-                  marginHorizontal: 10,
-                  color: "white",
-                  fontSize: 30,
+                  marginTop: 10,
+                  fontWeight: "bold",
+                  marginHorizontal: 8,
+                  color: "#e0fbfc",
+                  fontSize: 35,
                   fontStyle: "sans-serif",
                 }}
               >
@@ -185,14 +189,15 @@ export default function AuthScreen() {
             styles.closeButtonContainer,
             closeButtonContainerStyle,
             {
-              borderTopColor: "rgb(237, 229, 204)",
-              borderRightColor: "rgb(237, 229, 204)",
-              borderLeftColor: "rgb(237, 229, 204)",
+              borderTopColor: "#e0fbfc",
+              borderRightColor: "#e0fbfc",
+              borderLeftColor: "#e0fbfc",
+              borderBottomColor: "#e0fbfc",
             },
           ]}
         >
           <Text
-            style={{ color: "rgb(237, 229, 204)" }}
+            style={{ color: "#e0fbfc" }}
             onPress={() => (imagePosition.value = 1)}
           >
             X
@@ -213,14 +218,14 @@ export default function AuthScreen() {
         <Animated.View style={[styles.formInputContainer, formAnimatedStyle]}>
           <TextInput
             placeholder="Email"
-            placeholderTextColor="rgb(237, 229, 204)"
+            placeholderTextColor="#e0fbfc"
             style={styles.textInput}
             onChangeText={(text) => setEmailAddress(text)}
           />
           {isRegistering && (
             <TextInput
               placeholder="Full Name"
-              placeholderTextColor="rgb(237, 229, 204)"
+              placeholderTextColor="#e0fbfc"
               style={styles.textInput}
               onChangeText={(text) => setName(text)}
             />
@@ -228,7 +233,7 @@ export default function AuthScreen() {
           <TextInput
             secureTextEntry={true}
             placeholder="Password"
-            placeholderTextColor="rgb(237, 229, 204)"
+            placeholderTextColor="#e0fbfc"
             style={styles.textInput}
             onChangeText={(text) => setPassword(text)}
           />
